@@ -1,21 +1,18 @@
+
 <!DOCTYPE html>
 <html lang="hi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>:: HOME ::</title>
-<link rel="icon" type="image/png" href="logo.png" />
+  <link rel="icon" type="image/png" href="logo.png" />
   <style>
     html, body {
       height: 100%;
       margin: 0;
-    }
-
-    body {
+      padding: 0;
       font-family: 'Segoe UI', sans-serif;
       background-color: #f0fff4;
-      display: flex;
-      flex-direction: column;
     }
 
     .custom-header {
@@ -26,9 +23,6 @@
       padding: 15px 20px;
       background: linear-gradient(to right, blue, #d9ffd9);
       border-bottom: 2px solid green;
-      position: sticky;
-      top: 0;
-      z-index: 900;
       box-sizing: border-box;
       flex-wrap: wrap;
     }
@@ -41,7 +35,7 @@
     }
 
     .sub-title {
-      font-size: 20px;
+      font-size: 18px;
       color: #f5f5f5;
       font-weight: 600;
       text-shadow: 1px 1px 3px #333;
@@ -56,7 +50,7 @@
     }
 
     .logo img {
-      height: 90px;
+      height: 70px;
       width: auto;
       object-fit: contain;
     }
@@ -66,12 +60,20 @@
         flex-direction: column;
         text-align: center;
       }
+
       .logo {
         margin-top: 10px;
       }
+
       .notice {
         padding-left: 0;
         margin-top: 10px;
+      }
+
+      table {
+        display: block;
+        overflow-x: auto;
+        width: 100%;
       }
     }
 
@@ -81,18 +83,19 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      flex: 1;
     }
 
     h1 {
       color: #2b6e2e;
       margin-bottom: 20px;
+      text-align: center;
     }
 
     input[type="text"] {
       padding: 10px;
       font-size: 16px;
-      width: 280px;
+      width: 90%;
+      max-width: 300px;
       border: 2px solid #4CAF50;
       border-radius: 8px;
       margin: 5px 0;
@@ -119,9 +122,12 @@
       font-size: 18px;
       color: #333;
       text-align: center;
+      width: 100%;
+      overflow-x: auto;
     }
 
     table {
+      margin: 0 auto;
       margin-top: 20px;
       border-collapse: collapse;
       width: 100%;
@@ -131,6 +137,7 @@
     th, td {
       border: 1px solid #ccc;
       padding: 8px;
+      text-align: left;
     }
 
     th {
@@ -141,6 +148,7 @@
       margin-top: 10px;
       color: #006400;
       font-weight: bold;
+      text-align: center;
     }
 
     .footer {
@@ -149,123 +157,6 @@
       background-color: #d6f5d6;
       font-size: 14px;
       color: #2d662d;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Header -->
-  <header class="custom-header">
-    <div>
-      <div class="header-title">Employee Duty Search Portal</div>
-      <div class="sub-title">
-        Civil Airport Prayagraj. Secured by Special Security Force (UPSSF)<br>
-        Contact: SI Ravendra Singh (+919696085088)<br>
-        Const: Abhishek Singh (+919651569039)
-      </div>
-    </div>
-  
-    <div class="logo">
-      <img src="logo.png" alt="Logo">
-    </div>
-  </header>
-
-  <!-- Duty Search -->
-  <div class="page-content">
-    <h1>Search Your Duty Here 👇</h1>
-    <input type="text" id="pnoInput" placeholder="PNO Number">
-    <input type="text" id="nameInput" placeholder="Name">
-    <input type="text" id="dutyInput" placeholder="Duty Point">
-    <button onclick="findDuty()">Search</button>
-    <div class="result" id="resultArea">🔄 Data Loading... Please wait</div>
-  </div>
-
- 
-
-
-<script>
-	const sheetId = "164PPZGCPVwkyoNQFcQtR4LxKSQgDK8h8lE-XV8aE8S4";
-  const sheetURL = "https://opensheet.elk.sh/164PPZGCPVwkyoNQFcQtR4LxKSQgDK8h8lE-XV8aE8S4/Duty%20Chart";
-  let dutyData = [];
-
-  async function loadDutyData() {
-    try {
-      const response = await fetch(sheetURL);
-      dutyData = await response.json();
-      document.getElementById("resultArea").innerHTML = "✅ Please enter PNO / Name / Duty Point to search.";
-    } catch (error) {
-      document.getElementById("resultArea").innerHTML = "❌ Error loading data.";
-      console.error("Data Load Error:", error);
-    }
-  }
-
-  function findDuty() {
-    const pno = document.getElementById("pnoInput").value.trim().toLowerCase();
-    const name = document.getElementById("nameInput").value.trim().toLowerCase();
-    const dutyPoint = document.getElementById("dutyInput").value.trim().toLowerCase();
-    const resultArea = document.getElementById("resultArea");
-
-    if (!pno && !name && !dutyPoint) {
-      alert("⚠️ Please fill at least one field: PNO, Name or Duty Point.");
-      resultArea.innerHTML = "❗ Please fill at least one field.";
-      return;
-    }
-
-    const matches = dutyData.filter(row => {
-      const rowPNO = (row.PNO || "").toLowerCase();
-      const rowName = (row.Name || "").toLowerCase();
-      const rowDuty = (row["Duty Point"] || "").toLowerCase();
-
-      return (!pno || rowPNO === pno) &&
-             (!name || rowName.includes(name)) &&
-             (!dutyPoint || rowDuty.includes(dutyPoint));
-    });
-
-    if (matches.length === 0) {
-      alert("❌ Record not found. Please check your inputs.");
-      resultArea.innerHTML = "❌ No record found.";
-      return;
-    }
-
-    let html = "<table><tr><th>PNO</th><th>Designation</th><th>Name</th><th>Duty Point</th><th>Shift</th></tr>";
-    matches.forEach(row => {
-      html += `<tr>
-                  <td>${row.PNO}</td>
-                  <td>${row.Designation}</td>
-                  <td>${row.Name}</td>
-                  <td>${row["Duty Point"]}</td>
-                  <td>${row.Shift}</td>
-               </tr>`;
-    });
-    html += "</table>";
-    html += `<div class="note">✅ ${matches.length} record(s) found.</div>`;
-    resultArea.innerHTML = html;
-  }
-
-  window.onload = loadDutyData;
-</script>
-
-
-
-
-
-
-<!DOCTYPE html>
-<html lang="hi">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Centered Animated Button</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #f0fff4;
-      font-family: sans-serif;
     }
 
     .animated-button {
@@ -278,6 +169,8 @@
       text-decoration: none;
       transition: transform 0.3s ease, background-color 0.3s ease;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      display: inline-block;
+      margin-top: 10px;
     }
 
     .animated-button:hover {
@@ -291,18 +184,98 @@
   </style>
 </head>
 <body>
-<h1> Visit our other Website.  ||  Prakriti Seva Sansthan..  ||</h1>
-  <a href="https://prakritisewasansthan1.github.io/Prakriti-sewa-sansthan/" target="_blank" class="animated-button">Click Here</a>
 
-</body>
-</html>
+  <header class="custom-header">
+    <div>
+      <div class="header-title">Employee Duty Search Portal</div>
+      <div class="sub-title">
+        Civil Airport Prayagraj. Secured by Special Security Force (UPSSF)<br>
+        Contact: SI Ravendra Singh (+919696085088)<br>
+        Const: Abhishek Singh (+919651569039)
+      </div>
+    </div>
+    <div class="logo">
+      <img src="logo.png" alt="Logo">
+    </div>
+  </header>
 
+  <div class="page-content">
+    <h1>Search Your Duty Here 👇</h1>
+    <input type="text" id="pnoInput" placeholder="PNO Number">
+    <input type="text" id="nameInput" placeholder="Name">
+    <input type="text" id="dutyInput" placeholder="Duty Point">
+    <button onclick="findDuty()">Search</button>
+    <div class="result" id="resultArea">🔄 Data Loading... Please wait</div>
 
-
-
+    <div style="margin-top: 40px; text-align: center;">
+      <h3>Visit our other Website</h3>
+      <a href="https://prakritisewasansthan1.github.io/Prakriti-sewa-sansthan/" target="_blank" class="animated-button">Click Here</a>
+    </div>
+  </div>
 
   <div class="footer">
-    © 2025 Uttar Pradesh Special Security Force | UPSSF. All Ritghts Reserved. | Contact: 8299354507
+    © 2025 Uttar Pradesh Special Security Force | UPSSF. All Rights Reserved. | Contact: 8299354507
   </div>
+
+  <script>
+    const sheetURL = "https://opensheet.elk.sh/164PPZGCPVwkyoNQFcQtR4LxKSQgDK8h8lE-XV8aE8S4/Duty%20Chart";
+    let dutyData = [];
+
+    async function loadDutyData() {
+      try {
+        const response = await fetch(sheetURL);
+        dutyData = await response.json();
+        document.getElementById("resultArea").innerHTML = "✅ Please enter PNO / Name / Duty Point to search.";
+      } catch (error) {
+        document.getElementById("resultArea").innerHTML = "❌ Error loading data.";
+        console.error("Data Load Error:", error);
+      }
+    }
+
+    function findDuty() {
+      const pno = document.getElementById("pnoInput").value.trim().toLowerCase();
+      const name = document.getElementById("nameInput").value.trim().toLowerCase();
+      const dutyPoint = document.getElementById("dutyInput").value.trim().toLowerCase();
+      const resultArea = document.getElementById("resultArea");
+
+      if (!pno && !name && !dutyPoint) {
+        alert("⚠️ Please fill at least one field: PNO, Name or Duty Point.");
+        resultArea.innerHTML = "❗ Please fill at least one field.";
+        return;
+      }
+
+      const matches = dutyData.filter(row => {
+        const rowPNO = (row.PNO || "").toLowerCase();
+        const rowName = (row.Name || "").toLowerCase();
+        const rowDuty = (row["Duty Point"] || "").toLowerCase();
+
+        return (!pno || rowPNO === pno) &&
+               (!name || rowName.includes(name)) &&
+               (!dutyPoint || rowDuty.includes(dutyPoint));
+      });
+
+      if (matches.length === 0) {
+        alert("❌ Record not found. Please check your inputs.");
+        resultArea.innerHTML = "❌ No record found.";
+        return;
+      }
+
+      let html = "<table><tr><th>PNO</th><th>Designation</th><th>Name</th><th>Duty Point</th><th>Shift</th></tr>";
+      matches.forEach(row => {
+        html += `<tr>
+                    <td>${row.PNO}</td>
+                    <td>${row.Designation}</td>
+                    <td>${row.Name}</td>
+                    <td>${row["Duty Point"]}</td>
+                    <td>${row.Shift}</td>
+                 </tr>`;
+      });
+      html += "</table>";
+      html += `<div class="note">✅ ${matches.length} record(s) found.</div>`;
+      resultArea.innerHTML = html;
+    }
+
+    window.onload = loadDutyData;
+  </script>
 </body>
 </html>
