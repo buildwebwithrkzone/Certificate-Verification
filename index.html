@@ -4,10 +4,8 @@
   <meta name="google-site-verification" content="c18gC7GiAl_4SQPhVTRp9-t0LwUEXAlTXPjvhV3COIQ" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>:: ✈️ APSU DUTY PORTAL::</title>
+  <title>:: APSU DUTY PORTAL::</title>
   <link rel="icon" type="image/png" href="logo.png" />
-<link rel="manifest" href="manifest.json" />
-<meta name="theme-color" content="#2e7d32" />
   <style>
     html, body {
       height: 100%;
@@ -185,52 +183,51 @@
       transform: scale(0.95);
     }
 
-    /* ✈️ Flower Rain Animation */
-    .flower {
-      position: fixed;
-      top: -50px;
-      z-index: 9999;
-      pointer-events: none;
-      user-select: none;
-      font-size: 24px;
-      animation: fall linear infinite;
-    }
+    /* 🌸 Flower Rain Animation */
+    .flying-plane {
+  position: fixed;
+  bottom: -100px;
+  z-index: 0;
+  animation: planeFly linear forwards;
+  transform: rotate(-10deg);
+}
 
-    @keyframes fall {
-      0% {
-        transform: translateY(-50px) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(100vh) rotate(360deg);
-        opacity: 0;
-      }
-    }
+@keyframes planeFly {
+  from {
+    transform: translateY(0) translateX(0) scale(1) rotate(-10deg);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-150vh) translateX(-50vw) scale(0.6) rotate(-5deg);
+    opacity: 0;
+  }
+}
   </style>
 </head>
 <body>
 
-  <!-- ✈️ Flower Container -->
+  <!-- 🌸 Flower Container -->
   <script>
-    function createFlower() {
-      const flower = document.createElement("div");
-      flower.classList.add("flower");
-      flower.innerHTML = "✈️";
-      flower.style.left = Math.random() * 100 + "vw";
-      flower.style.animationDuration = 6 + Math.random() * 6 + "s";
-      flower.style.fontSize = 20 + Math.random() * 20 + "px";
-      document.body.appendChild(flower);
+  const planeImg = "plain.png"; // local image, same folder
 
-      setTimeout(() => {
-        flower.remove();
-      }, 5000);
-    }
-setInterval(() => {
-  if (Math.random() > 0.5) {
-    createFlower();
+  function flyPlane() {
+    const plane = document.createElement("img");
+    plane.src = planeImg;
+    plane.classList.add("flying-plane");
+
+    plane.style.left = Math.random() * 100 + "vw";
+    plane.style.width = 50 + Math.random() * 50 + "px";
+    plane.style.animationDuration = 6 + Math.random() * 6 + "s";
+
+    document.body.appendChild(plane);
+
+    setTimeout(() => {
+      plane.remove();
+    }, 12000);
   }
-}, 800);
-  </script>
+
+  setInterval(flyPlane, 10000); // Every 10 sec
+</script>
 
   <header class="custom-header">
     <div>
