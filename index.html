@@ -225,8 +225,11 @@
         flower.remove();
       }, 5000);
     }
-
-    setInterval(createFlower, 800);
+setInterval(() => {
+  if (Math.random() > 0.5) {
+    createFlower();
+  }
+}, 800);
   </script>
 
   <header class="custom-header">
