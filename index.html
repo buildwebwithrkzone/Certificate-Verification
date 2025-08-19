@@ -7,6 +7,8 @@
 
 
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +19,8 @@
       font-family: Arial;
     }
     .container {
-      width: 95%;
+      width: 80%;
+      max-width: 800px;
       margin: 30px auto;
       border: 2px solid #3c78d8;
       border-radius: 6px;
@@ -54,20 +57,19 @@
       display: block; /* center alignment */
     }
 
-    /* -------- Mobile View Fix -------- */
+    /* -------- Mobile View -------- */
     @media screen and (max-width: 600px) {
       .container {
-        width: 95%;
+        width: 95%;   /* थोड़ा छोटा ताकि center हो */
       }
       table {
-        width: auto;
-        margin: 0 auto;   /* Center table */
-      }
-      td {
-        padding: 6px 10px;
+        width: 100%;  /* पूरा table दिखे */
       }
       .label {
-        width: auto;
+        width: 40%;   /* पहले कॉलम को छोटा कर दिया */
+      }
+      td {
+        font-size: 14px; /* छोटा font ताकि adjust हो */
       }
     }
   </style>
@@ -114,7 +116,7 @@
       </tr>
       <tr>
         <td class="label">Roll No</td>
-        <td>00160809112452 </td>
+        <td>00160809112452</td>
       </tr>
       <tr>
         <td class="label">Certificate Issue Date</td>
@@ -125,10 +127,6 @@
   </div>
 </body>
 </html>
-
-
-
-
 
 
 
