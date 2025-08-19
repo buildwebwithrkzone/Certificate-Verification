@@ -7,7 +7,6 @@
 
 
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,6 +28,7 @@
       padding: 10px;
       font-weight: bold;
       font-size: 18px;
+      text-align: left;
     }
     table {
       width: 100%;
@@ -53,6 +53,23 @@
       font-size: 14px;
       display: block; /* center alignment */
     }
+
+    /* -------- Mobile View Fix -------- */
+    @media screen and (max-width: 600px) {
+      .container {
+        width: 95%;
+      }
+      table {
+        width: auto;
+        margin: 0 auto;   /* Center table */
+      }
+      td {
+        padding: 6px 10px;
+      }
+      .label {
+        width: auto;
+      }
+    }
   </style>
 </head>
 <body>
@@ -67,8 +84,8 @@
         <td class="label">Father Name</td>
         <td>ASHOK SINGH</td>
       </tr>
-	<tr>
-        <td class="label">Mother name</td>
+      <tr>
+        <td class="label">Mother Name</td>
         <td>SUSHEELA DEVI</td>
       </tr>
       <tr>
@@ -91,11 +108,11 @@
         <td class="label">Certified</td>
         <td>Yes</td>
       </tr>
-	 <tr>
+      <tr>
         <td class="label">Certificate No.</td>
         <td>180940000014365</td>
       </tr>
-	<tr>
+      <tr>
         <td class="label">Roll No</td>
         <td>00160809112452 </td>
       </tr>
@@ -104,7 +121,17 @@
         <td>20-Oct-2014</td>
       </tr>
     </table>
-    <button class="btn" align="centre">Close</button>
+    <button class="btn">Close</button>
   </div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
